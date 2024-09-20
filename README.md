@@ -7,7 +7,7 @@
 </p>
 
 ## About
-This repository contains skeleton code for the second assignment of the reinforcement learning course.
+This repository contains skeleton code for the third assignment of the reinforcement learning course.
 ## Getting started
 
 ### Prerequisites
