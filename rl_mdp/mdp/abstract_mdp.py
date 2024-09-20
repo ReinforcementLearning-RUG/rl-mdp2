@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Tuple
 import numpy as np
 
 
@@ -8,6 +8,13 @@ class AbstractMDP(ABC):
     Simple MDP abstract base class.
     Assumes: discrete state and action space (represented as integers).
     """
+    @abstractmethod
+    def reset(self) -> int:
+        pass
+
+    @abstractmethod
+    def step(self, action: int) -> Tuple[int, float, bool]:
+        pass
 
     @abstractmethod
     def transition_prob(self, new_state: int, state: int, action: int) -> float | np.ndarray:
@@ -46,6 +53,16 @@ class AbstractMDP(ABC):
         Getter for actions.
         :return: The list of all possible states represented by a list of actions.
         """
+        pass
+
+    @property
+    @abstractmethod
+    def num_states(self) -> int:
+        pass
+
+    @property
+    @abstractmethod
+    def num_actions(self) -> int:
         pass
 
     @property

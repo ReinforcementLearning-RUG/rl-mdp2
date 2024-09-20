@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple, Optional
 import numpy as np
 from rl_mdp.mdp.abstract_mdp import AbstractMDP
 from rl_mdp.mdp.reward_function import RewardFunction
@@ -12,7 +12,8 @@ class MDP(AbstractMDP):
             actions: List[int],
             transition_function: TransitionFunction,
             reward_function: RewardFunction,
-            discount_factor: float = 0.9
+            discount_factor: float = 0.9,
+            terminal_state: Optional[int] = None
     ):
         """
         Initializes the Markov Decision Process (MDP).
@@ -28,6 +29,52 @@ class MDP(AbstractMDP):
         self._transition_function = transition_function
         self._reward_function = reward_function
         self._discount_factor = discount_factor
+
+        self._curr_state = np.random.choice(self._states)
+        self._terminal_state = terminal_state       # Assuming one terminal state for simplicity.
+
+    def reset(self) -> int:
+        """
+        Re-initialize the state by sampling uniformly from the state space.
+        :return: New initial state.
+        """
+        self._curr_state = np.random.choice(self._states)
+        return self._curr_state
+
+    @property
+    def num_states(self) -> int:
+        return len(self._states)
+
+    @property
+    def num_actions(self) -> int:
+        return len(self._actions)
+
+    @property
+    def current_state(self) -> int:
+        return self._curr_state
+
+    def step(self, action: int) -> Tuple[int, float, bool]:
+        """
+        Perform a realization of p(s'|s,a) and r(s,a).
+
+        :param action: Action taken by the agent.
+
+        :return: A tuple containing the new state, the reward, and a done flag.
+        """
+        # Get the transition probabilities for the current state and action.
+        transition_probs = self._transition_function(self._curr_state, action)
+
+        # Sample the next state based on the transition probabilities.
+        next_state = np.random.choice(self._states, p=transition_probs)
+
+        # Calculate the reward for the current state and action.
+        reward = self._reward_function(self._curr_state, action)
+
+        self._curr_state = next_state
+
+        done = False if self._terminal_state is None else next_state == self._terminal_state
+
+        return next_state, reward, done
 
     def transition_prob(self, new_state: int, state: int, action: int) -> float | np.ndarray:
         """

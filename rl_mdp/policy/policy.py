@@ -24,6 +24,17 @@ class Policy(AbstractPolicy):
             for state, action in enumerate(policy_mapping):
                 self.set_action_probabilities(state, [1.0 if a == action else 0.0 for a in range(num_actions)])
 
+    def sample_action(self, state: int) -> int:
+        """
+        Samples an action from the policy given the current state.
+
+        :param state: The state for which an action should be sampled.
+        :return: The sampled action.
+        """
+        action_probabilities = self._action_probabilities(state)
+        # Implicit assumption that actions are represented as 0, 1, 2, ..., |A|!
+        return np.random.choice(len(action_probabilities), p=action_probabilities)
+
     def set_action_probabilities(self, state: int, action_probabilities: List[float]) -> None:
         """
         Sets the action probabilities for a given state in the policy.
