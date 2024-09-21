@@ -1,5 +1,4 @@
-from collections import defaultdict, deque
-from typing import Dict
+import numpy as np
 from rl_mdp.mdp.abstract_mdp import AbstractMDP
 from rl_mdp.model_free_prediction.abstract_evaluator import AbstractEvaluator
 from rl_mdp.policy.abstract_policy import AbstractPolicy
@@ -18,9 +17,9 @@ class TDEvaluator(AbstractEvaluator):
         self.env = env
         self.alpha = alpha
         self.n = n
-        self.value_fun = defaultdict(float)  # State-value function approximation.
+        self.value_fun = np.zeros(self.env.num_states)
 
-    def evaluate(self, num_episodes: int) -> Dict[int, float]:
+    def evaluate(self, num_episodes: int) -> np.ndarray:
         """
         Perform the TD prediction algorithm.
 

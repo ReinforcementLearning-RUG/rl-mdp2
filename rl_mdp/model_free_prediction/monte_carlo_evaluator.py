@@ -1,5 +1,6 @@
 from collections import defaultdict
-from typing import List, Tuple, Dict
+from typing import List, Tuple
+import numpy as np
 from rl_mdp.mdp.abstract_mdp import AbstractMDP
 from rl_mdp.model_free_prediction.abstract_evaluator import AbstractEvaluator
 from rl_mdp.policy.abstract_policy import AbstractPolicy
@@ -16,11 +17,11 @@ class MCEvaluator(AbstractEvaluator):
         """
         self.policy = policy
         self.env = env
-        self.value_fun = defaultdict(float)  # State-value function approximation
+        self.value_fun = np.zeros(self.env.num_states)  # State-value function approximation
         self.returns = defaultdict(list)  # Stores returns for each state
         self.first_visit = first_visit
 
-    def evaluate(self, num_episodes: int) -> Dict[int, float]:
+    def evaluate(self, num_episodes: int) -> np.ndarray:
         """
         Perform the Monte Carlo prediction algorithm.
         Use the helper function _generate_episode.
