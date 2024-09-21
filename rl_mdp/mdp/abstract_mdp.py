@@ -57,19 +57,19 @@ class AbstractMDP(ABC):
 
     @property
     @abstractmethod
+    def discount_factor(self) -> float:
+        """
+        Getter for discount factor (gamma).
+        :return: The discount factor.
+        """
+        pass
+
+    @property
+    @abstractmethod
     def num_states(self) -> int:
         pass
 
     @property
     @abstractmethod
     def num_actions(self) -> int:
-        pass
-
-    @property
-    @abstractmethod
-    def discount_factor(self) -> float:
-        """
-        Getter for discount factor (gamma).
-        :return: The discount factor.
-        """
         pass

@@ -1,24 +1,29 @@
-from collections import defaultdict, deque
+from collections import defaultdict
 from typing import Dict
+
 from rl_mdp.mdp.abstract_mdp import AbstractMDP
 from rl_mdp.model_free_prediction.abstract_evaluator import AbstractEvaluator
 from rl_mdp.policy.abstract_policy import AbstractPolicy
 
 
-class TDEvaluator(AbstractEvaluator):
-    def __init__(self, policy: AbstractPolicy, env: AbstractMDP, alpha: float = 0.1, n: int = 1):
+class TDLambdaEvaluator(AbstractEvaluator):
+    def __init__(self,
+                 policy: AbstractPolicy,
+                 env: AbstractMDP,
+                 alpha: float = 0.1,
+                 lambd: float = 0.9):
         """
-        Initializes the TD(0) Learner.
+        Initializes the TD(λ) Learner.
 
         :param policy: A policy object that provides action probabilities for each state.
         :param env: A mdp object.
         :param alpha: The step size (learning rate).
+        :param lambd: The trace decay parameter (λ).
         """
-        self.policy = policy
-        self.env = env
-        self.alpha = alpha
-        self.n = n
+        super().__init__(policy, env, alpha)
         self.value_fun = defaultdict(float)  # State-value function approximation.
+        self.lambd = lambd
+        self.eligibility_traces = defaultdict(float)
 
     def evaluate(self, num_episodes: int) -> Dict[int, float]:
         """
@@ -34,6 +39,6 @@ class TDEvaluator(AbstractEvaluator):
 
     def _run_episode(self) -> None:
         """
-        Runs a single episode using the n-step TD method to update the value function.
+        Runs a single episode using the TD(λ) method to update the value function.
         """
         pass

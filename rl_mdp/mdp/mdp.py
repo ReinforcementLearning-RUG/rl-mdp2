@@ -41,18 +41,6 @@ class MDP(AbstractMDP):
         self._curr_state = np.random.choice(self._states)
         return self._curr_state
 
-    @property
-    def num_states(self) -> int:
-        return len(self._states)
-
-    @property
-    def num_actions(self) -> int:
-        return len(self._actions)
-
-    @property
-    def current_state(self) -> int:
-        return self._curr_state
-
     def step(self, action: int) -> Tuple[int, float, bool]:
         """
         Perform a realization of p(s'|s,a) and r(s,a).
@@ -126,3 +114,24 @@ class MDP(AbstractMDP):
         :return: The discount factor.
         """
         return self._discount_factor
+
+    @property
+    def num_states(self) -> int:
+        """
+        :return: The number of states.
+        """
+        return len(self._states)
+
+    @property
+    def num_actions(self) -> int:
+        """
+        :return: The number of actions.
+        """
+        return len(self._actions)
+
+    @property
+    def current_state(self) -> int:
+        """
+        :return: The current state.
+        """
+        return self._curr_state
