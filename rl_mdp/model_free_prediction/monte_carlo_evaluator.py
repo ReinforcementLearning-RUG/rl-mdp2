@@ -7,7 +7,7 @@ from rl_mdp.policy.abstract_policy import AbstractPolicy
 
 
 class MCEvaluator(AbstractEvaluator):
-    def __init__(self, policy: AbstractPolicy, env: AbstractMDP, first_visit: bool = True):
+    def __init__(self, policy: AbstractPolicy, env: AbstractMDP, every_visit: bool = False):
         """
         Initializes the Monte Carlo Evaluator.
 
@@ -19,7 +19,7 @@ class MCEvaluator(AbstractEvaluator):
         self.env = env
         self.value_fun = np.zeros(self.env.num_states)  # State-value function approximation
         self.returns = defaultdict(list)  # Stores returns for each state
-        self.first_visit = first_visit
+        self.every_visit = every_visit
 
     def evaluate(self, num_episodes: int) -> np.ndarray:
         """
