@@ -11,7 +11,7 @@ class TDLambdaEvaluator(AbstractEvaluator):
                  alpha: float = 0.1,
                  lambd: float = 0.9):
         """
-        Initializes the TD(λ) Learner.
+        Initializes the TD(λ) Evaluator.
 
         :param policy: A policy object that provides action probabilities for each state.
         :param env: A mdp object.

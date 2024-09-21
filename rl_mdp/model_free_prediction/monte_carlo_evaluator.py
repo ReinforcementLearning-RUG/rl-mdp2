@@ -29,7 +29,10 @@ class MCEvaluator(AbstractEvaluator):
         :param num_episodes: Number of episodes to run for estimating V(s).
         :return: The state-value function V(s) for the associated policy.
         """
-        pass
+        for _ in range(num_episodes):
+            episode = self._generate_episode()
+            self._update_value_function(episode)
+        return self.value_fun
 
     def _generate_episode(self) -> List[Tuple[int, int, float]]:
         """
@@ -48,3 +51,11 @@ class MCEvaluator(AbstractEvaluator):
             state = next_state
 
         return episode
+
+    def _update_value_function(self, episode: List[Tuple[int, int, float]]) -> None:
+        """
+        Update the value function using the first-visit or every-visit Monte Carlo method.
+
+        :param episode: A list of (state, action, reward) tuples.
+        """
+        pass
