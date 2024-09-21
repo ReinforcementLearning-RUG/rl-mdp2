@@ -13,7 +13,7 @@ class MCEvaluator(AbstractEvaluator):
 
         :param policy: A policy object that provides action probabilities for each state.
         :param env: An environment object.
-        :param every_visit: every_visit variant (True) or first-visit variant (False)
+        :param every_visit: every_visit variant (True) or first-visit variant (False).
         """
         self.policy = policy
         self.env = env
