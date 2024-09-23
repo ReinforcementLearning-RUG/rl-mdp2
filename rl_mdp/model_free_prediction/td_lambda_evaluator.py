@@ -8,8 +8,8 @@ class TDLambdaEvaluator(AbstractEvaluator):
     def __init__(self,
                  policy: AbstractPolicy,
                  env: AbstractMDP,
-                 alpha: float = 0.1,
-                 lambd: float = 0.9):
+                 alpha: float,
+                 lambd: float):
         """
         Initializes the TD(λ) Evaluator.
 

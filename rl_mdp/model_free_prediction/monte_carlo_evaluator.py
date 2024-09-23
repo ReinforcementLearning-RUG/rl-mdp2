@@ -7,24 +7,21 @@ from rl_mdp.policy.abstract_policy import AbstractPolicy
 
 
 class MCEvaluator(AbstractEvaluator):
-    def __init__(self, policy: AbstractPolicy, env: AbstractMDP, every_visit: bool = False):
+    def __init__(self, policy: AbstractPolicy, env: AbstractMDP):
         """
         Initializes the Monte Carlo Evaluator.
 
         :param policy: A policy object that provides action probabilities for each state.
         :param env: An environment object.
-        :param every_visit: every_visit variant (True) or first-visit variant (False).
         """
         self.policy = policy
         self.env = env
         self.value_fun = np.zeros(self.env.num_states)  # State-value function approximation
         self.returns = defaultdict(list)  # Stores returns for each state
-        self.every_visit = every_visit
 
     def evaluate(self, num_episodes: int) -> np.ndarray:
         """
         Perform the Monte Carlo prediction algorithm.
-        Use the helper function _generate_episode.
 
         :param num_episodes: Number of episodes to run for estimating V(s).
         :return: The state-value function V(s) for the associated policy.
@@ -54,7 +51,7 @@ class MCEvaluator(AbstractEvaluator):
 
     def _update_value_function(self, episode: List[Tuple[int, int, float]]) -> None:
         """
-        Update the value function using the first-visit or every-visit Monte Carlo method.
+        Update the value function using the Monte Carlo method.
 
         :param episode: A list of (state, action, reward) tuples.
         """

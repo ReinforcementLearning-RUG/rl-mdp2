@@ -66,3 +66,15 @@ class Policy(AbstractPolicy):
             return self.action_dist[state]
         else:
             raise ValueError(f"No action probabilities defined for state {state}.")
+
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the policy object, showing the action probability distributions
+        for each state.
+
+        :return: A string representation of the policy.
+        """
+        policy_str = "Policy:\n"
+        for state, action_probs in self.action_dist.items():
+            policy_str += f"  State {state}: {action_probs}\n"
+        return policy_str if self.action_dist else "Policy: No action probabilities defined."
