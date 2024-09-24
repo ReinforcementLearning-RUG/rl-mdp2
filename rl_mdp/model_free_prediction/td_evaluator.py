@@ -6,35 +6,34 @@ from rl_mdp.policy.abstract_policy import AbstractPolicy
 
 class TDEvaluator(AbstractEvaluator):
     def __init__(self,
-                 policy: AbstractPolicy,
                  env: AbstractMDP,
                  alpha: float):
         """
         Initializes the TD(0) Evaluator.
 
-        :param policy: A policy object that provides action probabilities for each state.
         :param env: A mdp object.
         :param alpha: The step size (learning rate).
         """
-        self.policy = policy
         self.env = env
         self.alpha = alpha
-        self.value_fun = np.zeros(self.env.num_states)
+        self.value_fun = np.zeros(self.env.num_states)    # Estimate of state-value function.
 
-    def evaluate(self, num_episodes: int) -> np.ndarray:
+    def evaluate(self, policy: AbstractPolicy, num_episodes: int) -> np.ndarray:
         """
         Perform the TD prediction algorithm.
 
+        :param policy: A policy object that provides action probabilities for each state.
         :param num_episodes: Number of episodes to run for estimating V(s).
         :return: The state-value function V(s) for the associated policy.
         """
         for _ in range(num_episodes):
-            self._update_value_function()
+            self._update_value_function(policy)
 
         return self.value_fun
 
-    def _update_value_function(self) -> None:
+    def _update_value_function(self, policy: AbstractPolicy) -> None:
         """
         Runs a single episode using the TD(0) method to update the value function.
+        :param policy: A policy object that provides action probabilities for each state.
         """
         pass

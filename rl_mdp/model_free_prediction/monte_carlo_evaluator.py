@@ -7,31 +7,30 @@ from rl_mdp.policy.abstract_policy import AbstractPolicy
 
 
 class MCEvaluator(AbstractEvaluator):
-    def __init__(self, policy: AbstractPolicy, env: AbstractMDP):
+    def __init__(self, env: AbstractMDP):
         """
         Initializes the Monte Carlo Evaluator.
 
-        :param policy: A policy object that provides action probabilities for each state.
         :param env: An environment object.
         """
-        self.policy = policy
         self.env = env
-        self.value_fun = np.zeros(self.env.num_states)  # State-value function approximation
+        self.value_fun = np.zeros(self.env.num_states)    # Estimate of state-value function.
         self.returns = defaultdict(list)  # Stores returns for each state
 
-    def evaluate(self, num_episodes: int) -> np.ndarray:
+    def evaluate(self, policy: AbstractPolicy, num_episodes: int) -> np.ndarray:
         """
         Perform the Monte Carlo prediction algorithm.
 
+        :param policy: A policy object that provides action probabilities for each state.
         :param num_episodes: Number of episodes to run for estimating V(s).
         :return: The state-value function V(s) for the associated policy.
         """
         for _ in range(num_episodes):
-            episode = self._generate_episode()
+            episode = self._generate_episode(policy)
             self._update_value_function(episode)
         return self.value_fun
 
-    def _generate_episode(self) -> List[Tuple[int, int, float]]:
+    def _generate_episode(self, policy: AbstractPolicy) -> List[Tuple[int, int, float]]:
         """
         Generate an episode following the policy.
 
@@ -42,7 +41,7 @@ class MCEvaluator(AbstractEvaluator):
         done = False
 
         while not done:
-            action = self.policy.sample_action(state)
+            action = policy.sample_action(state)
             next_state, reward, done = self.env.step(action)
             episode.append((state, action, reward))
             state = next_state
