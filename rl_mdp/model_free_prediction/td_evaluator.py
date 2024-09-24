@@ -29,11 +29,11 @@ class TDEvaluator(AbstractEvaluator):
         :return: The state-value function V(s) for the associated policy.
         """
         for _ in range(num_episodes):
-            self._run_episode()
+            self._update_value_function()
 
         return self.value_fun
 
-    def _run_episode(self) -> None:
+    def _update_value_function(self) -> None:
         """
         Runs a single episode using the TD(0) method to update the value function.
         """

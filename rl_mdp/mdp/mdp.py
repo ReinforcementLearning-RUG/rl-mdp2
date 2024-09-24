@@ -13,7 +13,8 @@ class MDP(AbstractMDP):
             transition_function: TransitionFunction,
             reward_function: RewardFunction,
             discount_factor: float = 0.9,
-            terminal_state: Optional[int] = None
+            terminal_state: Optional[int] = None,
+            start_state: Optional[int] = 0
     ):
         """
         Initializes the Markov Decision Process (MDP).
@@ -23,6 +24,8 @@ class MDP(AbstractMDP):
         :param transition_function: A TransitionFunction object that provides transition probabilities.
         :param reward_function: A RewardFunction object that provides rewards.
         :param discount_factor: A discount factor for future rewards.
+        :param terminal_state: A terminal state.
+        :param start_state: A starting state. If set, then reset() will always return that state.
         """
         self._states = states
         self._actions = actions
@@ -30,7 +33,8 @@ class MDP(AbstractMDP):
         self._reward_function = reward_function
         self._discount_factor = discount_factor
 
-        self._curr_state = np.random.choice(self._states)
+        self._start_state = start_state
+        self._curr_state = self._start_state if self._start_state is not None else np.random.choice(self._states)
         self._terminal_state = terminal_state       # Assuming one terminal state for simplicity.
 
     def reset(self) -> int:
@@ -38,7 +42,7 @@ class MDP(AbstractMDP):
         Re-initialize the state by sampling uniformly from the state space.
         :return: New initial state.
         """
-        self._curr_state = np.random.choice(self._states)
+        self._curr_state = self._start_state if self._start_state is not None else np.random.choice(self._states)
         return self._curr_state
 
     def step(self, action: int) -> Tuple[int, float, bool]:
