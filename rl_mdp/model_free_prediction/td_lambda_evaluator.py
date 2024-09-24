@@ -13,7 +13,7 @@ class TDLambdaEvaluator(AbstractEvaluator):
         Initializes the TD(λ) Evaluator.
 
         :param env: A mdp object.
-        :param alpha: The step size (learning rate).
+        :param alpha: The step size.
         :param lambd: The trace decay parameter (λ).
         """
         self.env = env

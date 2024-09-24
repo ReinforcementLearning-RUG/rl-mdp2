@@ -12,7 +12,7 @@ class TDEvaluator(AbstractEvaluator):
         Initializes the TD(0) Evaluator.
 
         :param env: A mdp object.
-        :param alpha: The step size (learning rate).
+        :param alpha: The step size.
         """
         self.env = env
         self.alpha = alpha
