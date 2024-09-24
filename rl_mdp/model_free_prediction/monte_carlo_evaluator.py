@@ -26,11 +26,12 @@ class MCEvaluator(AbstractEvaluator):
         :return: The state-value function V(s) for the associated policy.
         """
         self.value_fun.fill(0)  # Reset value function.
+        self.returns.clear()
 
         for _ in range(num_episodes):
             episode = self._generate_episode(policy)
             self._update_value_function(episode)
-        return self.value_fun
+        return self.value_fun.copy()
 
     def _generate_episode(self, policy: AbstractPolicy) -> List[Tuple[int, int, float]]:
         """

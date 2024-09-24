@@ -31,7 +31,7 @@ class TDEvaluator(AbstractEvaluator):
         for _ in range(num_episodes):
             self._update_value_function(policy)
 
-        return self.value_fun
+        return self.value_fun.copy()
 
     def _update_value_function(self, policy: AbstractPolicy) -> None:
         """
