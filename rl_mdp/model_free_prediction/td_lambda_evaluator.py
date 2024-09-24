@@ -30,6 +30,8 @@ class TDLambdaEvaluator(AbstractEvaluator):
         :param num_episodes: Number of episodes to run for estimating V(s).
         :return: The state-value function V(s) for the associated policy.
         """
+        self.value_fun.fill(0)              # Reset value function.
+
         for _ in range(num_episodes):
             self._update_value_function(policy)
 
