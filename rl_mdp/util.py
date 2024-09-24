@@ -58,7 +58,7 @@ def create_policy_1() -> Policy:
     policy_1.set_action_probabilities(0, [0.2, 0.8])  # State S0: 20% to take a0, 80% to take a1
     policy_1.set_action_probabilities(1, [0.9, 0.1])  # State S1: 90% to take a0, 10% to take a1
     policy_1.set_action_probabilities(2, [1.0, 0.0])  # State S2: 100% to take a0, 0% to take a1
-    policy_1.set_action_probabilities(3, [1.0, 0.0])  # Terminal state: only action is to stay
+    policy_1.set_action_probabilities(3, [1.0, 0.0])  # Terminal state: Arbitrary action.
     return policy_1
 
 
@@ -70,5 +70,5 @@ def create_policy_2() -> Policy:
     policy_2.set_action_probabilities(0, [0.7, 0.3])  # State S0: 70% to take a0, 30% to take a1
     policy_2.set_action_probabilities(1, [0.6, 0.4])  # State S1: 60% to take a0, 40% to take a1
     policy_2.set_action_probabilities(2, [0.4, 0.6])  # State S2: 40% to take a0, 60% to take a1
-    policy_2.set_action_probabilities(3, [1.0, 0.0])  # Terminal state: only action is to stay
+    policy_2.set_action_probabilities(3, [1.0, 0.0])  # Terminal state: Arbitrary action.
     return policy_2
